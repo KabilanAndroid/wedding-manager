@@ -9,6 +9,13 @@ export const Routes = {
   events: '/events',
   eventDetail: '/events/:eventId',
   functionDetail: '/events/:eventId/functions/:functionId',
+  services: '/services',
+  serviceCategory: '/services/:category',
+  search: '/search',
+  deals: '/deals',
+  bookings: '/bookings',
+  cart: '/cart',
+  account: '/account',
 } as const;
 
 export type RouteKey = keyof typeof Routes;

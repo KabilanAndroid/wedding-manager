@@ -1,111 +1,85 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import 'tailwindcss';
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@theme {
+  --color-maroon-900: #3d0f19;
+  --color-maroon-800: #4f1621;
+  --color-maroon-700: #65202d;
+  --color-gold-500: #e9a42c;
+  --color-gold-400: #f1b847;
+  --color-gold-300: #f4c56a;
+  --color-gold-50: #fdf3e0;
+  --color-saffron: #d9772b;
+  --color-cream: #f7f3ee;
+  --color-ink: #3b1119;
+  --color-muted: #8a7a76;
+  --color-line: #ece4da;
+  --color-night: #20304f;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-sans: 'DM Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --shadow-card: 0 1px 2px rgb(61 15 25 / 0.04), 0 8px 24px -12px rgb(61 15 25 / 0.18);
+}
+
+@layer base {
+  body {
+    @apply min-h-svh bg-cream font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold-400;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+@utility container-page {
+  @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6;
 }
 
-body {
-  margin: 0;
+@utility eyebrow {
+  @apply text-[11px] font-bold tracking-[0.2em] uppercase;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+@utility btn-primary {
+  @apply inline-flex items-center gap-3.5 rounded-[10px] bg-gold-500 px-[18px] py-3.5 text-sm font-bold text-maroon-900 transition hover:-translate-y-px hover:bg-gold-400;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+
+/* Night sky behind the hero, shaded maroon on the left so the text stays readable. */
+@utility bg-hero {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(61 15 25 / 0.95) 0%,
+      rgb(61 15 25 / 0.82) 35%,
+      rgb(61 15 25 / 0.35) 65%,
+      rgb(61 15 25 / 0.05) 100%
+    ),
+    radial-gradient(ellipse 60% 70% at 85% 15%, #4a6698 0%, #2a3b63 45%, transparent 75%),
+    linear-gradient(180deg, var(--color-night) 0%, #3a2030 70%, var(--color-maroon-900) 100%);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Marigold garland strands, drawn in CSS so the page needs no image asset. */
+@utility bg-garlands {
+  background:
+    radial-gradient(circle at 50% 0, rgb(255 230 160 / 0.35) 0 1.5px, transparent 2px) 0 0 / 23px 19px,
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 26px,
+      rgb(233 164 44 / 0.75) 26px 33px,
+      transparent 33px 61px,
+      rgb(241 184 71 / 0.55) 61px 66px,
+      transparent 66px 92px,
+      rgb(217 140 40 / 0.65) 92px 100px,
+      transparent 100px 131px
+    );
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 35%, #000 100%),
+    linear-gradient(180deg, #000 0%, #000 80%, transparent 100%);
+  mask-composite: intersect;
 }

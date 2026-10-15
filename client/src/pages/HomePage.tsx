@@ -1,6 +1,9 @@
 import { ArrowRight, Check, Headset, IndianRupee } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Link } from '../components/common/Link';
+import { SectionHeader } from '../components/common/SectionHeader';
+import { ServiceCard } from '../components/services/ServiceCard';
+import { PopularServices } from '../constants/popularServices';
 import { ServiceCategories } from '../constants/services';
 
 interface TrustPoint {
@@ -54,22 +57,15 @@ export function HomePage() {
         </ul>
       </section>
 
-      <section className="pt-12 pb-16" aria-labelledby="categories-title">
+      <section className="pt-12" aria-labelledby="categories-title">
         <div className="container-page">
-          <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="eyebrow mb-2 text-[10px] text-maroon-700">Plan by category</p>
-              <h2 id="categories-title" className="text-2xl font-medium tracking-tight text-maroon-900">
-                What are you looking for?
-              </h2>
-            </div>
-            <Link
-              to="services"
-              className="inline-flex shrink-0 items-center gap-1 text-[11px] font-bold text-saffron hover:text-maroon-700"
-            >
-              View all categories <ArrowRight size={14} aria-hidden="true" />
-            </Link>
-          </div>
+          <SectionHeader
+            id="categories-title"
+            eyebrow="Plan by category"
+            title="What are you looking for?"
+            linkTo="services"
+            linkLabel="View all categories"
+          />
 
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
             {featured.map((c) => (
@@ -88,6 +84,26 @@ export function HomePage() {
                   <span className="text-xs font-bold text-maroon-900">{c.title}</span>
                   <span className="text-[9px] text-muted">{c.count}</span>
                 </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="pt-12 pb-16" aria-labelledby="popular-title">
+        <div className="container-page">
+          <SectionHeader
+            id="popular-title"
+            eyebrow="Handpicked for your function"
+            title="Popular services near Vellore"
+            linkTo="services"
+            linkLabel="See all services"
+          />
+
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {PopularServices.map((service) => (
+              <li key={service.id}>
+                <ServiceCard service={service} />
               </li>
             ))}
           </ul>

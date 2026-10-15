@@ -11,6 +11,7 @@ export const Routes = {
   functionDetail: '/events/:eventId/functions/:functionId',
   services: '/services',
   serviceCategory: '/services/:category',
+  serviceDetail: '/services/:category/:serviceId',
   search: '/search',
   deals: '/deals',
   bookings: '/bookings',

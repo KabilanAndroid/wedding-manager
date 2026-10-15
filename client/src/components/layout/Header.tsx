@@ -3,20 +3,18 @@ import type { FormEvent } from 'react';
 import { ChevronDown, Menu, Search } from 'lucide-react';
 import { ServiceCategories } from '../../constants/services';
 import { useAuthModal } from '../../context/AuthModalContext';
+import { useCart } from '../../context/CartContext';
 import type { ServiceCategoryKey } from '../../constants/services';
 import { useNavigation } from '../../hooks/useNavigation';
 import { matchPath } from '../../utils/routing';
 import { Link } from '../common/Link';
 
-interface HeaderProps {
-  cartCount?: number;
-}
-
 const navLink =
   'inline-flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-2.5 text-[11px] font-semibold hover:bg-white/8 aria-[current=page]:bg-white/8';
 const actionLabel = 'text-[11px] font-bold group-hover:text-gold-300';
 
-export function Header({ cartCount = 0 }: HeaderProps) {
+export function Header() {
+  const { count: cartCount } = useCart();
   const { navigate, isActive, pathname, query } = useNavigation();
   const authModal = useAuthModal();
   const activeCategory = matchPath('serviceCategory', pathname)?.category;
@@ -31,7 +29,7 @@ export function Header({ cartCount = 0 }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-10 text-white">
+    <header className="sticky top-0 z-30 text-white">
       <div className="bg-maroon-900">
         <div className="container-page flex min-h-17 flex-wrap items-center gap-x-6 gap-y-3 py-3 lg:flex-nowrap">
           <Link to="home" className="flex shrink-0 items-center gap-3" aria-label="Kalyana Manager home">

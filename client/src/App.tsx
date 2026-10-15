@@ -1,5 +1,6 @@
 import { CircleHelp } from 'lucide-react';
 import { AuthModalProvider } from './components/auth/AuthModalProvider';
+import { CartProvider } from './components/cart/CartProvider';
 import { Header } from './components/layout/Header';
 import { useNavigation } from './hooks/useNavigation';
 import type { RouteKey } from './constants/routes';
@@ -14,6 +15,7 @@ const PageTitles: Record<Exclude<RouteKey, 'home'>, string> = {
   functionDetail: 'Function details',
   services: 'All services',
   serviceCategory: 'Vendors',
+  serviceDetail: 'Service details',
   search: 'Search results',
   deals: 'Function Day Deals',
   bookings: 'Your bookings',
@@ -25,17 +27,19 @@ function App() {
   const { route } = useNavigation();
 
   return (
-    <AuthModalProvider>
-      <Header cartCount={2} />
-      {route === 'home' ? <HomePage /> : <PlaceholderPage title={route ? PageTitles[route] : 'Page not found'} />}
-      <button
-        type="button"
-        className="fixed right-5 bottom-5 z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-[#2a2a2e] text-white shadow-lg"
-        aria-label="Help"
-      >
-        <CircleHelp size={22} aria-hidden="true" />
-      </button>
-    </AuthModalProvider>
+    <CartProvider>
+      <AuthModalProvider>
+        <Header />
+        {route === 'home' ? <HomePage /> : <PlaceholderPage title={route ? PageTitles[route] : 'Page not found'} />}
+        <button
+          type="button"
+          className="fixed right-5 bottom-5 z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-[#2a2a2e] text-white shadow-lg"
+          aria-label="Help"
+        >
+          <CircleHelp size={22} aria-hidden="true" />
+        </button>
+      </AuthModalProvider>
+    </CartProvider>
   );
 }
 

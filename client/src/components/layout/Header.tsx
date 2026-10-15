@@ -43,7 +43,7 @@ export function Header({ cartCount = 0 }: HeaderProps) {
           </Link>
 
           <form
-            className="order-3 flex h-11 min-w-0 basis-full overflow-hidden rounded-md bg-white focus-within:ring-2 focus-within:ring-gold-400 lg:order-0 lg:flex-1 lg:basis-auto"
+            className="order-3 flex h-11 min-w-0 basis-full overflow-hidden rounded-md bg-white focus-within:ring-2 focus-within:ring-gold-400 lg:order-none lg:flex-1 lg:basis-auto"
             role="search"
             onSubmit={handleSearch}
           >

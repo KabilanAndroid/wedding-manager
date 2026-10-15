@@ -32,7 +32,7 @@
 }
 
 @utility container-page {
-  @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6;
+  @apply w-full px-4 sm:px-6 lg:px-10 xl:px-20;
 }
 
 @utility eyebrow {

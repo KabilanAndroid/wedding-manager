@@ -30,7 +30,7 @@ export function HomePage() {
         />
 
         <div className="container-page flex flex-1 flex-col items-start justify-center pt-18 pb-26">
-          <p className="eyebrow mb-4 text-saffron">Vellore wedding season offers</p>
+          <p className="eyebrow mb-4 text-saffron">wedding season offers</p>
           <h1 className="max-w-190 text-[clamp(40px,6vw,64px)] leading-[1.05] font-medium tracking-[-0.04em]">
             Everything for the big day,
             <em className="mt-1 block font-serif font-normal tracking-[-0.02em] text-gold-400">all in one place.</em>
@@ -95,7 +95,7 @@ export function HomePage() {
           <SectionHeader
             id="popular-title"
             eyebrow="Handpicked for your function"
-            title="Popular services near Vellore"
+            title="Popular services near"
             linkTo="services"
             linkLabel="See all services"
           />

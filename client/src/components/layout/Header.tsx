@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { ChevronDown, Menu, Search } from 'lucide-react';
 import { ServiceCategories } from '../../constants/services';
+import { useAuth } from '../../context/AuthContext';
 import { useAuthModal } from '../../context/AuthModalContext';
 import { useCart } from '../../context/CartContext';
 import type { ServiceCategoryKey } from '../../constants/services';
@@ -17,6 +18,7 @@ export function Header() {
   const { count: cartCount } = useCart();
   const { navigate, isActive, pathname, query } = useNavigation();
   const authModal = useAuthModal();
+  const { user, signOut } = useAuth();
   const activeCategory = matchPath('serviceCategory', pathname)?.category;
   const [category, setCategory] = useState<ServiceCategoryKey | 'all'>('all');
   const [search, setSearch] = useState(query.get('q') ?? '');
@@ -83,14 +85,26 @@ export function Header() {
           </form>
 
           <nav className="ml-auto flex shrink-0 items-center gap-5 lg:ml-0 lg:gap-7" aria-label="Account">
-            <button
-              type="button"
-              onClick={() => authModal.open('login')}
-              className="group hidden cursor-pointer flex-col items-start leading-tight sm:flex"
-            >
-              <small className="text-[9px] text-white/75">Hello, sign in</small>
-              <strong className={actionLabel}>Family Account</strong>
-            </button>
+            {user ? (
+              <button
+                type="button"
+                onClick={signOut}
+                className="group hidden cursor-pointer flex-col items-start leading-tight sm:flex"
+                title="Sign out"
+              >
+                <small className="max-w-32 truncate text-[9px] text-white/75">Hello, {user.name}</small>
+                <strong className={actionLabel}>Sign Out</strong>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => authModal.open('login')}
+                className="group hidden cursor-pointer flex-col items-start leading-tight sm:flex"
+              >
+                <small className="text-[9px] text-white/75">Hello, sign in</small>
+                <strong className={actionLabel}>Family Account</strong>
+              </button>
+            )}
             <Link to="bookings" className="group flex flex-col leading-tight">
               <small className="text-[9px] text-white/75">Your</small>
               <strong className={actionLabel}>Bookings</strong>

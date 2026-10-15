@@ -1,5 +1,6 @@
 import { CircleHelp } from 'lucide-react';
 import { AuthModalProvider } from './components/auth/AuthModalProvider';
+import { AuthProvider } from './components/auth/AuthProvider';
 import { CartProvider } from './components/cart/CartProvider';
 import { Header } from './components/layout/Header';
 import { useNavigation } from './hooks/useNavigation';
@@ -27,19 +28,21 @@ function App() {
   const { route } = useNavigation();
 
   return (
-    <CartProvider>
-      <AuthModalProvider>
-        <Header />
-        {route === 'home' ? <HomePage /> : <PlaceholderPage title={route ? PageTitles[route] : 'Page not found'} />}
-        <button
-          type="button"
-          className="fixed right-5 bottom-5 z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-[#2a2a2e] text-white shadow-lg"
-          aria-label="Help"
-        >
-          <CircleHelp size={22} aria-hidden="true" />
-        </button>
-      </AuthModalProvider>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <AuthModalProvider>
+          <Header />
+          {route === 'home' ? <HomePage /> : <PlaceholderPage title={route ? PageTitles[route] : 'Page not found'} />}
+          <button
+            type="button"
+            className="fixed right-5 bottom-5 z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-[#2a2a2e] text-white shadow-lg"
+            aria-label="Help"
+          >
+            <CircleHelp size={22} aria-hidden="true" />
+          </button>
+        </AuthModalProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

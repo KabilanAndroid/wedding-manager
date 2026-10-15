@@ -2,6 +2,7 @@ import { useEffect, useId, useRef } from 'react';
 import type { FormEvent, MouseEvent } from 'react';
 import { MoveRight, X } from 'lucide-react';
 import { usePost } from '../../api/API';
+import { useAuth } from '../../context/AuthContext';
 import type { AuthMode } from '../../context/AuthModalContext';
 import { TextField } from '../common/TextField';
 
@@ -38,6 +39,7 @@ function field(form: FormData, name: string): string {
 export function AuthModal({ mode, onModeChange, onClose }: AuthModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const auth = useAuth();
   const login = usePost('login');
   const register = usePost('register');
   const request = mode === 'login' ? login : register;
@@ -68,14 +70,14 @@ export function AuthModal({ mode, onModeChange, onClose }: AuthModalProps) {
     const form = new FormData(event.currentTarget);
     try {
       if (mode === 'login') {
-        await login.mutate({ email: field(form, 'email'), password: String(form.get('password') ?? '') });
+        auth.signIn(await login.mutate({ email: field(form, 'email'), password: String(form.get('password') ?? '') }));
       } else {
-        await register.mutate({
+        auth.signIn(await register.mutate({
           name: field(form, 'name'),
           email: field(form, 'email'),
           phone: field(form, 'phone'),
           password: String(form.get('password') ?? ''),
-        });
+        }));
       }
       onClose();
     } catch {

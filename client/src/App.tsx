@@ -1,4 +1,5 @@
 import { CircleHelp } from 'lucide-react';
+import { AuthModalProvider } from './components/auth/AuthModalProvider';
 import { Header } from './components/layout/Header';
 import { useNavigation } from './hooks/useNavigation';
 import type { RouteKey } from './constants/routes';
@@ -24,7 +25,7 @@ function App() {
   const { route } = useNavigation();
 
   return (
-    <>
+    <AuthModalProvider>
       <Header cartCount={2} />
       {route === 'home' ? <HomePage /> : <PlaceholderPage title={route ? PageTitles[route] : 'Page not found'} />}
       <button
@@ -34,7 +35,7 @@ function App() {
       >
         <CircleHelp size={22} aria-hidden="true" />
       </button>
-    </>
+    </AuthModalProvider>
   );
 }
 

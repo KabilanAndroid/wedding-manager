@@ -2,8 +2,8 @@
 // The key used here must match the key in ApiEndpoints (ApiTypes.tsx);
 // useGet / usePost read these maps to infer types from the key alone.
 
-import type { CreateGuestRequest, GetGuestsParams } from './RequestDataType';
-import type { GetGuestsResponse, Guest, TestResponse } from './ResponseDataType';
+import type { CreateGuestRequest, GetGuestsParams, LoginRequest, RegisterRequest } from './RequestDataType';
+import type { AuthResponse, GetGuestsResponse, Guest, TestResponse } from './ResponseDataType';
 
 /** GET endpoints: query params + response. */
 export interface GetApiMap {
@@ -13,6 +13,8 @@ export interface GetApiMap {
 
 /** POST endpoints: request body + response. */
 export interface PostApiMap {
+  login: { request: LoginRequest; response: AuthResponse };
+  register: { request: RegisterRequest; response: AuthResponse };
   createGuest: { request: CreateGuestRequest; response: Guest };
 }
 

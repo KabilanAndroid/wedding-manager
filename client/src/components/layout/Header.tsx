@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { ChevronDown, Menu, Search } from 'lucide-react';
 import { ServiceCategories } from '../../constants/services';
+import { useAuthModal } from '../../context/AuthModalContext';
 import type { ServiceCategoryKey } from '../../constants/services';
 import { useNavigation } from '../../hooks/useNavigation';
 import { matchPath } from '../../utils/routing';
@@ -17,6 +18,7 @@ const actionLabel = 'text-[11px] font-bold group-hover:text-gold-300';
 
 export function Header({ cartCount = 0 }: HeaderProps) {
   const { navigate, isActive, pathname, query } = useNavigation();
+  const authModal = useAuthModal();
   const activeCategory = matchPath('serviceCategory', pathname)?.category;
   const [category, setCategory] = useState<ServiceCategoryKey | 'all'>('all');
   const [search, setSearch] = useState(query.get('q') ?? '');
@@ -83,10 +85,14 @@ export function Header({ cartCount = 0 }: HeaderProps) {
           </form>
 
           <nav className="ml-auto flex shrink-0 items-center gap-5 lg:ml-0 lg:gap-7" aria-label="Account">
-            <Link to="account" className="group hidden flex-col leading-tight sm:flex">
+            <button
+              type="button"
+              onClick={() => authModal.open('login')}
+              className="group hidden cursor-pointer flex-col items-start leading-tight sm:flex"
+            >
               <small className="text-[9px] text-white/75">Hello, sign in</small>
               <strong className={actionLabel}>Family Account</strong>
-            </Link>
+            </button>
             <Link to="bookings" className="group flex flex-col leading-tight">
               <small className="text-[9px] text-white/75">Your</small>
               <strong className={actionLabel}>Bookings</strong>

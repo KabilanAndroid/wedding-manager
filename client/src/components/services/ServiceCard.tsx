@@ -1,21 +1,10 @@
 import { useState } from 'react';
-import { BedDouble, Bus, Camera, Check, Flower2, Heart, Landmark, Music, Star, UtensilsCrossed } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { Check, Heart, Star } from 'lucide-react';
 import type { PopularService } from '../../constants/popularServices';
-import type { ServiceCategoryKey } from '../../constants/services';
 import { useCart } from '../../context/CartContext';
 import { formatRupees } from '../../utils/format';
 import { Link } from '../common/Link';
-
-const CategoryIcons: Record<ServiceCategoryKey, LucideIcon> = {
-  catering: UtensilsCrossed,
-  mandapam: Landmark,
-  decoration: Flower2,
-  photography: Camera,
-  music: Music,
-  logistics: Bus,
-  travel: BedDouble,
-};
+import { CategoryIcons } from './categoryIcons';
 
 interface ServiceCardProps {
   service: PopularService;

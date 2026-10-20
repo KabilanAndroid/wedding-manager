@@ -4,19 +4,21 @@ import { AuthModalProvider } from './components/auth/AuthModalProvider';
 import { AuthProvider } from './components/auth/AuthProvider';
 import { CartProvider } from './components/cart/CartProvider';
 import { Header } from './components/layout/Header';
-import { useNavigation } from './hooks/useNavigation';
+import { useNavigation, useRouteParams } from './hooks/useNavigation';
 import type { RouteKey } from './constants/routes';
 import { HomePage } from './pages/HomePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
+import { AllServicesPage, CategoryPages } from './pages/services';
+import type { ServiceCategoryKey } from './constants/services';
 
-const PageTitles: Record<Exclude<RouteKey, 'home' | 'admin' | 'adminLogin' | 'adminUsers'>, string> = {
+type PlaceholderRoute = Exclude<RouteKey, 'home' | 'services' | 'serviceCategory' | 'admin' | 'adminLogin' | 'adminUsers'>;
+
+const PageTitles: Record<PlaceholderRoute, string> = {
   guests: 'Guests',
   guestDetail: 'Guest details',
   events: 'Events',
   eventDetail: 'Event details',
   functionDetail: 'Function details',
-  services: 'All services',
-  serviceCategory: 'Vendors',
   serviceDetail: 'Service details',
   search: 'Search results',
   deals: 'Function Day Deals',
@@ -27,11 +29,14 @@ const PageTitles: Record<Exclude<RouteKey, 'home' | 'admin' | 'adminLogin' | 'ad
 
 function App() {
   const { route, pathname } = useNavigation();
+  const categoryParams = useRouteParams('serviceCategory');
 
   // The admin panel is its own app: no customer header, cart or login
   if (pathname === '/admin' || pathname.startsWith('/admin/')) return <AdminApp />;
 
-  const pageTitle = route && route in PageTitles ? PageTitles[route as keyof typeof PageTitles] : 'Page not found';
+  const pageTitle = route && route in PageTitles ? PageTitles[route as PlaceholderRoute] : 'Page not found';
+  const category = categoryParams?.category;
+  const CategoryPage = category && category in CategoryPages ? CategoryPages[category as ServiceCategoryKey] : null;
 
   return (
     <AuthProvider>
@@ -40,6 +45,10 @@ function App() {
           <Header />
           {route === 'home' ? (
             <HomePage />
+          ) : route === 'services' ? (
+            <AllServicesPage />
+          ) : CategoryPage ? (
+            <CategoryPage />
           ) : (
             <PlaceholderPage title={pageTitle} />
           )}

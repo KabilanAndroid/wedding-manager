@@ -1,7 +1,7 @@
 import type { ServiceCategoryKey } from './services';
 
 export type ServiceTag = 'Bestseller' | 'Top rated' | 'Popular' | 'Great value';
-export type PriceUnit = 'per plate' | 'per set' | 'onwards';
+export type PriceUnit = 'per plate' | 'per set' | 'per day' | 'per event' | 'per night' | 'onwards';
 
 export interface PopularService {
   id: string;

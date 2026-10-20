@@ -25,13 +25,13 @@ export const Routes = {
   adminCategories: '/admin/categories',
   adminEventspage: '/admin/events',
   adminOrderHistory:'/admin/orders',
-  adminSubCategories:'admin/subcategories',
+  adminSubCategories:'/admin/subcategories',
   adminFoodAndCatering:'/admin/foodandcatering',
   adminPackageAndPricing:'/admin/packageandpricing',
   adminPayments:'/admin/payments',
   adminCouponsAndOffers:'/admin/couponsandoffers',
   adminReviewsAndRatings:'/admin/reviewsandratings',
-  adminNotification:'admin/notification',
+  adminNotification:'/admin/notification',
   adminSettings:'/admin/settings',
 
 } as const;

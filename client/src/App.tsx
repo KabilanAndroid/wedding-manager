@@ -11,9 +11,9 @@ import { PlaceholderPage } from './pages/PlaceholderPage';
 import { AllServicesPage, CategoryPages } from './pages/services';
 import type { ServiceCategoryKey } from './constants/services';
 
-const PageTitles: Record<Exclude<RouteKey, 'home' | 'admin' | 'adminLogin' | 'adminDashboard' | 'adminUsers' | 'adminCategories' |'adminEventspage'| 'adminOrderHistory'|'adminSubCategories'
-|'adminFoodAndCatering'|'adminPackageAndPricing'|'adminPayments'|'adminCouponsAndOffers'|'adminReviewsAndRatings'  |'adminNotification'|'adminSettings'>,string> = {
-type PlaceholderRoute = Exclude<RouteKey, 'home' | 'services' | 'serviceCategory' | 'admin' | 'adminLogin' | 'adminUsers'>;
+// Customer routes without a real page yet. Every admin* route belongs to AdminApp, so new admin
+// pages never need to be listed here.
+type PlaceholderRoute = Exclude<RouteKey, 'home' | 'services' | 'serviceCategory' | `admin${string}`>;
 
 const PageTitles: Record<PlaceholderRoute, string> = {
   guests: 'Guests',

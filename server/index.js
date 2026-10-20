@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const { connectDB } = require('./db');
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./admin/routes');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes); // admin panel API (server/admin/)
 
 // Test Route
 app.get('/api/test', (req, res) => {

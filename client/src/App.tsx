@@ -1,4 +1,5 @@
 import { CircleHelp } from 'lucide-react';
+import { AdminApp } from './admin/AdminApp';
 import { AuthModalProvider } from './components/auth/AuthModalProvider';
 import { AuthProvider } from './components/auth/AuthProvider';
 import { CartProvider } from './components/cart/CartProvider';
@@ -8,7 +9,7 @@ import type { RouteKey } from './constants/routes';
 import { HomePage } from './pages/HomePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 
-const PageTitles: Record<Exclude<RouteKey, 'home'>, string> = {
+const PageTitles: Record<Exclude<RouteKey, 'home' | 'admin' | 'adminLogin' | 'adminUsers'>, string> = {
   guests: 'Guests',
   guestDetail: 'Guest details',
   events: 'Events',
@@ -25,14 +26,23 @@ const PageTitles: Record<Exclude<RouteKey, 'home'>, string> = {
 };
 
 function App() {
-  const { route } = useNavigation();
+  const { route, pathname } = useNavigation();
+
+  // The admin panel is its own app: no customer header, cart or login
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) return <AdminApp />;
+
+  const pageTitle = route && route in PageTitles ? PageTitles[route as keyof typeof PageTitles] : 'Page not found';
 
   return (
     <AuthProvider>
       <CartProvider>
         <AuthModalProvider>
           <Header />
-          {route === 'home' ? <HomePage /> : <PlaceholderPage title={route ? PageTitles[route] : 'Page not found'} />}
+          {route === 'home' ? (
+            <HomePage />
+          ) : (
+            <PlaceholderPage title={pageTitle} />
+          )}
           <button
             type="button"
             className="fixed right-5 bottom-5 z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-[#2a2a2e] text-white shadow-lg"

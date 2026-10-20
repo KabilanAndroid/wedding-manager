@@ -17,6 +17,10 @@ export const Routes = {
   bookings: '/bookings',
   cart: '/cart',
   account: '/account',
+  // Admin panel (client/src/admin)
+  admin: '/admin',
+  adminLogin: '/admin/login',
+  adminUsers: '/admin/users',
 } as const;
 
 export type RouteKey = keyof typeof Routes;

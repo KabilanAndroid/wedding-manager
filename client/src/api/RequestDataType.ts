@@ -15,6 +15,10 @@ export interface RegisterRequest {
   password: string;
 }
 
+/* ---------------------------------- Admin -------------------------------- */
+
+export type AdminLoginRequest = LoginRequest;
+
 /* --------------------------------- Guests -------------------------------- */
 
 export interface GetGuestsParams {

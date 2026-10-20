@@ -19,6 +19,27 @@ export interface AuthResponse {
   user: AuthUser;
 }
 
+/* ---------------------------------- Admin -------------------------------- */
+
+/** A staff account from the admins table (not a customer). */
+export interface AdminProfile {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface AdminLoginResponse {
+  token: string;
+  admin: AdminProfile;
+}
+
+/** A customer row as shown in the admin panel. */
+export interface UserListItem extends AuthUser {
+  /** ISO date string, or null if the user has never logged in. */
+  last_login: string | null;
+  created_at: string;
+}
+
 /* --------------------------------- Guests -------------------------------- */
 
 export interface Guest {

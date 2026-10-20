@@ -27,7 +27,15 @@ const create = async ({ name, email, phone, password }) => {
     'INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)',
     [user.name, user.email, user.phone, hash]
   );
-  return { id: result.insertId, ...user, role: 'user' };
+  return { id: result.insertId, ...user };
+};
+
+// Every user without the password hash, oldest first
+const findAll = async () => {
+  const [rows] = await pool.query(
+    'SELECT id, name, email, phone, last_login, created_at FROM users ORDER BY id'
+  );
+  return rows;
 };
 
 const updateLastLogin = (id) => pool.query('UPDATE users SET last_login = NOW() WHERE id = ?', [id]);
@@ -35,4 +43,4 @@ const updateLastLogin = (id) => pool.query('UPDATE users SET last_login = NOW() 
 // Compare a plain-text password with the stored hash
 const comparePassword = (candidatePassword, hash) => bcrypt.compare(candidatePassword, hash);
 
-module.exports = { validate, findByEmail, create, updateLastLogin, comparePassword };
+module.exports = { validate, findByEmail, findAll, create, updateLastLogin, comparePassword };

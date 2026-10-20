@@ -11,6 +11,8 @@ export const ApiEndpoints: Record<GetApiKey | PostApiKey, string> = {
   createGuest: '/guests',
   login: '/auth/login',
   register: '/auth/register',
+  adminLogin: '/admin/auth/login',
+  getAdminUsers: '/admin/users',
 };
 
 export type PathParams = Record<string, string | number>;

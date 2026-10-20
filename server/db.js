@@ -18,13 +18,22 @@ const pool = mysql.createPool({
   connectionLimit: 10,
 });
 
-// Run every .sql file in database/migrations, in name order (001_, 002_, ...).
-// Each file uses "IF NOT EXISTS", so running them again on every start is safe.
+// Run each .sql file in database/migrations once, in name order (001_, 002_, ...).
+// Finished files are recorded in the "migrations" table so they never run twice.
 const runMigrations = async () => {
+  await pool.query(
+    'CREATE TABLE IF NOT EXISTS migrations (name VARCHAR(255) PRIMARY KEY, run_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)'
+  );
+  const [rows] = await pool.query('SELECT name FROM migrations');
+  const done = new Set(rows.map((r) => r.name));
+
   const dir = path.join(__dirname, 'database', 'migrations');
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.sql')).sort();
   for (const file of files) {
+    if (done.has(file)) continue;
     await pool.query(fs.readFileSync(path.join(dir, file), 'utf8'));
+    await pool.query('INSERT INTO migrations (name) VALUES (?)', [file]);
+    console.log(`   ran migration ${file}`);
   }
 };
 

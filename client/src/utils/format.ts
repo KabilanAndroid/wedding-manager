@@ -8,3 +8,10 @@ const rupees = new Intl.NumberFormat('en-IN', {
 export function formatRupees(amount: number): string {
   return rupees.format(amount);
 }
+
+const dateTime = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+
+/** '2026-10-19T23:14:59.000Z' -> '20 Oct 2026, 4:44 am' (in the viewer's time zone). */
+export function formatDateTime(iso: string): string {
+  return dateTime.format(new Date(iso));
+}

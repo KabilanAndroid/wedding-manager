@@ -6,7 +6,7 @@ const { pool } = require('../db');
 const showUsers = async () => {
   try {
     const [rows] = await pool.query(
-      'SELECT id, name, email, phone, role, last_login, created_at FROM users ORDER BY id'
+      'SELECT id, name, email, phone, last_login, created_at FROM users ORDER BY id'
     );
     console.log(`${rows.length} user(s) in ${process.env.MYSQL_DATABASE}.users`);
     if (rows.length) console.table(rows);

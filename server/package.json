@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "npx nodemon index.js",
-    "users": "node scripts/showUsers.js"
+    "users": "node scripts/showUsers.js",
+    "create-admin": "node admin/scripts/createAdmin.js"
   },
   "keywords": [],
   "author": "",

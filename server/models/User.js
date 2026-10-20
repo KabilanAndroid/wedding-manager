@@ -1,56 +1,38 @@
 // server/models/User.js
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { pool } = require('../db');
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, 'Name is required'],
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: [true, 'Email is required'],
-      unique: true,
-      lowercase: true,
-      trim: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],
-    },
-    phone: {
-      type: String,
-      required: [true, 'Phone is required'],
-      trim: true,
-      match: [/^\+?[0-9 ]{10,15}$/, 'Please enter a valid phone number'],
-    },
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-      minlength: [6, 'Password must be at least 6 characters'],
-      select: false, // never returned in queries unless explicitly requested
-    },
-    role: {
-      type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
-    },
-    lastLogin: {
-      type: Date,
-    },
-  },
-  { timestamps: true } // adds createdAt and updatedAt
-);
-
-// Hash the password before saving
-userSchema.pre('save', async function () {
-  if (!this.isModified('password')) return;
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-// Compare a plain-text password with the stored hash
-userSchema.methods.comparePassword = function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+// Check the sign-up fields; returns an error message, or null when everything is valid
+const validate = ({ name, email, phone, password }) => {
+  if (!name || !String(name).trim()) return 'Name is required';
+  if (!email || !/^\S+@\S+\.\S+$/.test(email)) return 'Please enter a valid email';
+  if (!phone || !/^\+?[0-9 ]{10,15}$/.test(phone)) return 'Please enter a valid phone number';
+  if (!password || String(password).length < 6) return 'Password must be at least 6 characters';
+  return null;
 };
 
-module.exports = mongoose.model('User', userSchema);
+const normalizeEmail = (email) => String(email).toLowerCase().trim();
+
+// Returns the full row (including the password hash), or null if no such email
+const findByEmail = async (email) => {
+  const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [normalizeEmail(email)]);
+  return rows[0] || null;
+};
+
+// Hash the password and insert a new user; returns the new user without the password
+const create = async ({ name, email, phone, password }) => {
+  const hash = await bcrypt.hash(password, 10);
+  const user = { name: String(name).trim(), email: normalizeEmail(email), phone: String(phone).trim() };
+  const [result] = await pool.query(
+    'INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)',
+    [user.name, user.email, user.phone, hash]
+  );
+  return { id: result.insertId, ...user, role: 'user' };
+};
+
+const updateLastLogin = (id) => pool.query('UPDATE users SET last_login = NOW() WHERE id = ?', [id]);
+
+// Compare a plain-text password with the stored hash
+const comparePassword = (candidatePassword, hash) => bcrypt.compare(candidatePassword, hash);
+
+module.exports = { validate, findByEmail, create, updateLastLogin, comparePassword };

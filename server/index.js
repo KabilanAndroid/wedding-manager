@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const connectDB = require('./db');
+const { connectDB } = require('./db');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
@@ -20,7 +20,7 @@ app.get('/api/test', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB, then start the server
+// Connect to MySQL, then start the server
 connectDB().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

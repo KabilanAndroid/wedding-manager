@@ -14,7 +14,7 @@ export type LinkProps<K extends RouteKey> = Omit<AnchorHTMLAttributes<HTMLAnchor
  * Anchor that navigates client-side. Params are type-checked like `navigate`.
  *
  * @example
- * <Link to="serviceCategory" params={{ category: 'catering' }}>Catering</Link>
+ * <Link to="serviceCategory" params={{ category: 'food' }}>Food</Link>
  */
 export function Link<K extends RouteKey>({ to, params, query, replace, onClick, ...rest }: LinkProps<K>) {
   const { navigate } = useNavigation();

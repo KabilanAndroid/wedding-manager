@@ -122,16 +122,17 @@ export function Header() {
       <nav className="bg-maroon-700" aria-label="Services">
         <div className="container-page flex min-h-10 items-center justify-between gap-6">
           <ul className="no-scrollbar flex items-center gap-1 overflow-x-auto">
-            <li>
+            {/* <li>
               <Link
                 to="services"
                 className={`${navLink} -ml-3`}
                 aria-current={isActive('services') ? 'page' : undefined}
               >
                 <Menu size={16} aria-hidden="true" />
-                All Services
+                Food
               </Link>
-            </li>
+            </li> */}
+             <Menu size={16} aria-hidden="true" />
             {ServiceCategories.filter((c) => c.inNav).map((c) => (
               <li key={c.key}>
                 <Link

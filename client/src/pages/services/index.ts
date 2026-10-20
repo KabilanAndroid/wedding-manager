@@ -1,22 +1,20 @@
 import type { ComponentType } from 'react';
 import type { ServiceCategoryKey } from '../../constants/services';
-import { CateringPage } from './CateringPage';
 import { DecorationPage } from './DecorationPage';
-import { LogisticsPage } from './LogisticsPage';
-import { MandapamPage } from './MandapamPage';
-import { MusicPage } from './MusicPage';
-import { PhotographyPage } from './PhotographyPage';
-import { TravelPage } from './TravelPage';
+import { FoodPage } from './FoodPage';
+import { MakeupMehendiPage } from './MakeupMehendiPage';
+import { PhotographyVideographyPage } from './PhotographyVideographyPage';
+import { ReviewsPage } from './ReviewsPage';
+import { SnacksPage } from './SnacksPage';
 
 export { AllServicesPage } from './AllServicesPage';
 
 /** The page shown at /services/:category, one per category. */
 export const CategoryPages: Record<ServiceCategoryKey, ComponentType> = {
-  catering: CateringPage,
-  mandapam: MandapamPage,
+  food: FoodPage,
   decoration: DecorationPage,
-  photography: PhotographyPage,
-  music: MusicPage,
-  logistics: LogisticsPage,
-  travel: TravelPage,
+  'photography-videography': PhotographyVideographyPage,
+  'makeup-mehendi': MakeupMehendiPage,
+  snacks: SnacksPage,
+  reviews: ReviewsPage,
 };

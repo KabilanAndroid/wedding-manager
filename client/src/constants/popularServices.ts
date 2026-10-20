@@ -22,7 +22,7 @@ export interface PopularService {
 export const PopularServices: readonly PopularService[] = [
   {
     id: 'traditional-elai-saapadu',
-    category: 'catering',
+    category: 'food',
     vendor: 'Sri Annapoorani Caterers',
     title: 'Traditional Elai Saapadu',
     tag: 'Bestseller',

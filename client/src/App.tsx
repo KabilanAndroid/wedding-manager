@@ -9,7 +9,8 @@ import type { RouteKey } from './constants/routes';
 import { HomePage } from './pages/HomePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 
-const PageTitles: Record<Exclude<RouteKey, 'home' | 'admin' | 'adminLogin' | 'adminUsers'>, string> = {
+const PageTitles: Record<Exclude<RouteKey, 'home' | 'admin' | 'adminLogin' | 'adminDashboard' | 'adminUsers' | 'adminCategories' |'adminEventspage'| 'adminOrderHistory'|'adminSubCategories'
+|'adminFoodAndCatering'|'adminPackageAndPricing'|'adminPayments'|'adminCouponsAndOffers'|'adminReviewsAndRatings'  |'adminNotification'|'adminSettings'>,string> = {
   guests: 'Guests',
   guestDetail: 'Guest details',
   events: 'Events',

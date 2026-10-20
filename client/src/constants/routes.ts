@@ -20,7 +20,20 @@ export const Routes = {
   // Admin panel (client/src/admin)
   admin: '/admin',
   adminLogin: '/admin/login',
+  adminDashboard: '/admin/dashboard',
   adminUsers: '/admin/users',
+  adminCategories: '/admin/categories',
+  adminEventspage: '/admin/events',
+  adminOrderHistory:'/admin/orders',
+  adminSubCategories:'admin/subcategories',
+  adminFoodAndCatering:'/admin/foodandcatering',
+  adminPackageAndPricing:'/admin/packageandpricing',
+  adminPayments:'/admin/payments',
+  adminCouponsAndOffers:'/admin/couponsandoffers',
+  adminReviewsAndRatings:'/admin/reviewsandratings',
+  adminNotification:'admin/notification',
+  adminSettings:'/admin/settings',
+
 } as const;
 
 export type RouteKey = keyof typeof Routes;

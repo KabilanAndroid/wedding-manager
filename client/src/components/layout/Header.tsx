@@ -9,6 +9,7 @@ import type { ServiceCategoryKey } from '../../constants/services';
 import { useNavigation } from '../../hooks/useNavigation';
 import { matchPath } from '../../utils/routing';
 import { Link } from '../common/Link';
+import { AllMenu } from './AllMenu';
 
 const navLink =
   'inline-flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-2.5 text-[11px] font-semibold hover:bg-white/8 aria-[current=page]:bg-white/8';
@@ -16,12 +17,13 @@ const actionLabel = 'text-[11px] font-bold group-hover:text-gold-300';
 
 export function Header() {
   const { count: cartCount } = useCart();
-  const { navigate, isActive, pathname, query } = useNavigation();
+  const { navigate, pathname, query } = useNavigation();
   const authModal = useAuthModal();
   const { user, signOut } = useAuth();
   const activeCategory = matchPath('serviceCategory', pathname)?.category;
   const [category, setCategory] = useState<ServiceCategoryKey | 'all'>('all');
   const [search, setSearch] = useState(query.get('q') ?? '');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -109,11 +111,29 @@ export function Header() {
               <small className="text-[9px] text-white/75">Your</small>
               <strong className={actionLabel}>Bookings</strong>
             </Link>
-            <Link to="cart" className="group flex items-end gap-1.5" aria-label={`Cart, ${cartCount} items`}>
-              <span className="grid h-7.5 min-w-8 place-items-center rounded-b-lg border-2 border-t-0 border-gold-400 px-1.5 text-xs font-bold">
-                {cartCount}
+            <Link to="cart" className="group flex items-end gap-0.5" aria-label={`Cart, ${cartCount} items`}>
+              <span className="relative">
+                {/* Open-top basket, so the count has room to sit inside it. */}
+                <svg
+                  width="40"
+                  height="32"
+                  viewBox="0 0 40 32"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2 4h5l5 18h20l4-12" />
+                  <circle cx="14" cy="27.5" r="2.2" fill="currentColor" stroke="none" />
+                  <circle cx="29" cy="27.5" r="2.2" fill="currentColor" stroke="none" />
+                </svg>
+                <span className="absolute top-1 left-[55%] -translate-x-1/2 text-base font-bold leading-none text-gold-400">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
               </span>
-              <strong className={actionLabel}>Cart</strong>
+              <strong className={`${actionLabel} pb-1 text-sm`}>Cart</strong>
             </Link>
           </nav>
         </div>
@@ -122,17 +142,17 @@ export function Header() {
       <nav className="bg-maroon-700" aria-label="Services">
         <div className="container-page flex min-h-10 items-center justify-between gap-6">
           <ul className="no-scrollbar flex items-center gap-1 overflow-x-auto">
-            {/* <li>
-              <Link
-                to="services"
-                className={`${navLink} -ml-3`}
-                aria-current={isActive('services') ? 'page' : undefined}
+            <li>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                className={`${navLink} -ml-3 cursor-pointer`}
+                aria-haspopup="dialog"
               >
                 <Menu size={16} aria-hidden="true" />
-                Food
-              </Link>
-            </li> */}
-             <Menu size={16} aria-hidden="true" />
+                All
+              </button>
+            </li>
             {ServiceCategories.filter((c) => c.inNav).map((c) => (
               <li key={c.key}>
                 <Link
@@ -151,6 +171,8 @@ export function Header() {
           </Link>
         </div>
       </nav>
+
+      {menuOpen && <AllMenu onClose={() => setMenuOpen(false)} />}
     </header>
   );
 }

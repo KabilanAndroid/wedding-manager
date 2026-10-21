@@ -28,7 +28,7 @@ function AdminCategoryAddPage() {
     setError('');
 
     const result = await upload(file, {
-      folder: 'Category',
+      folder: 'Events/Category',
     });
 
     if (result) {

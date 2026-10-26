@@ -2,9 +2,11 @@
 // Everything under /api/admin
 const express = require('express');
 const { protectAdmin } = require('../middleware/protectAdmin');
+const { uploadImage } = require('../middleware/uploadImage');
 const { login } = require('../controllers/authController');
 const { getUsers } = require('../controllers/usersController');
 const {addCategories} = require('../controllers/categoriesController');
+const { addFood, getFoods } = require('../controllers/foodController');
 
 const router = express.Router();
 
@@ -23,5 +25,9 @@ router.post('/addcategories',addCategories);
 router.use(protectAdmin);
 
 router.get('/users', getUsers); // GET /api/admin/users
+
+// Food & catering
+router.post('/foods', uploadImage('image'), addFood); // POST /api/admin/foods (form + image file)
+router.get('/foods', getFoods); // GET  /api/admin/foods
 
 module.exports = router;

@@ -1,10 +1,9 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import AddHeadercomponent from '../components/AddHeadercomponent';
+import AddFieldcomponent from '../components/AddFieldcomponent';
 import { useCloudinary } from "../../hooks/useCloudinary";
 import { api, toApiError } from '../../api/API';
-const inputClass =
-  'w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none focus:border-maroon-900';
 
 function AdminCategoryAddPage() {
   //const [form, setForm] = useState({ name: '', description: '', active: true });
@@ -101,27 +100,21 @@ function AdminCategoryAddPage() {
               </p>
             )}
 
-            <label className="mb-4 block">
-              <span className="mb-1 block text-xs font-semibold text-ink">Name</span>
-              <input
-                autoFocus
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="e.g. DJ"
-                className={inputClass}
-              />
-            </label>
+            <AddFieldcomponent
+              label="Name"
+              autoFocus
+              value={form.name}
+              onChange={(name) => setForm({ ...form, name })}
+              placeholder="e.g. DJ"
+            />
 
-            <label className="mb-4 block">
-              <span className="mb-1 block text-xs font-semibold text-ink">Description</span>
-              <textarea
-                rows={4}
-                value={form.description}
-                onChange={(e) => { setForm({ ...form, description: e.target.value }) }}
-                placeholder="Short description shown to customers"
-                className={inputClass}
-              />
-            </label>
+            <AddFieldcomponent
+              label="Description"
+              rows={4}
+              value={form.description}
+              onChange={(description) => setForm({ ...form, description })}
+              placeholder="Short description shown to customers"
+            />
 
             <label className="mb-4 block">
               <span className="mb-1 block text-xs font-semibold text-ink">
